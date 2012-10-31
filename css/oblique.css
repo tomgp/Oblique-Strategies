@@ -1,0 +1,107 @@
+* {
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  overflow: hidden;
+}
+body {
+  background-color: #000;
+}
+.deck_select_button {
+  color: #000;
+  background-color: #FFF;
+  padding: 5px;
+}
+.option {
+  padding: 10px;
+}
+.active {
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  background-color: #FFF;
+  color: #111;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  -webkit-transition-duration: 0.5s;
+  -webkit-transform: translateY(0);
+  -moz-transition-duration: 0.5s;
+  -moz-transform: translateY(0);
+}
+.discard {
+  left: 0px;
+  top: 100%;
+  position: absolute;
+  background-color: #333;
+  color: #111;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  -moz-transition-duration: 0.5s;
+  -moz-transform: translateY(100%);
+  -webkit-transition-duration: 0.5s;
+  -webkit-transform: translateY(100%);
+}
+.stack {
+  left: 0px;
+  top: -100%;
+  position: absolute;
+  background-color: #333;
+  color: #111;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  -webkit-transition-duration: 0.5s;
+  -webkit-transform: translateY(-100%);
+  -moz-transition-duration: 0.5s;
+  -moz-transform: translateY(-100%);
+}
+.control_active {
+  position: absolute;
+  -webkit-transform: translateY(0);
+  left: 0px;
+  top: 0px;
+  -moz-transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+}
+.control_inactive {
+  position: absolute;
+  left: 0px;
+  top: -100%;
+  -webkit-transform: translateY(-100%);
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -moz-transform: translateY(-100%);
+}
+#overlay {
+  cursor: hand;
+  text-indent: -9999px;
+  background-image: url(../img/cog_grey.png);
+  background-repeat: no-repeat;
+  width: 70px;
+  height: 70px;
+  white-space: nowrap;
+}
+.card_text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 30%;
+  width: 50%;
+  margin: -10% 0 0 -25%;
+}
+.info {
+  padding: 5px;
+  font-size: 1rem;
+  background-color: #FFF;
+}
+.credits {
+  padding: 5px;
+  font-size: 1rem;
+  background-color: #FFF;
+}
+.body_link {
+  font-size: 1rem;
+  background-color: #FFF;
+}
