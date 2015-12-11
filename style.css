@@ -1,0 +1,91 @@
+html { font-size: 15px; }
+
+body { 
+	font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", sans-serif, "Helvetica Neue", "Lucida Grande";
+	color: #00;
+}
+
+.frame{
+	z-index: 1000;
+	position: fixed;
+	top:4vh;
+	left:4vw;
+	bottom:4vh;
+	right:4vw; 
+	border: 10px solid;
+}
+
+.ui{
+	z-index: 1001;
+	position: fixed;
+	border: 5px solid;
+	background: #FFF;
+	top:0;
+	left:0;
+}
+
+.info{
+	z-index: 1001;
+	position: fixed;
+	bottom:0;
+	right:0;
+	border: 5px solid;
+	background: #FFF;
+}
+
+button{
+	user-select: none;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1rem;
+}
+
+button:active{
+	background: blue;
+	color: white;
+}
+
+button:focus{
+	outline:1px dotted magenta;
+}
+
+.card{
+	font-weight: 400;
+	font-size: 3.2rem;
+	line-height: 1;
+	height:100vh;
+	display: flex;
+	height:100vh;
+	padding-left: 7vw;
+	padding-right: 7vw;
+	align-items: center;
+	justify-content: center;
+}
+
+.card.unselected{
+	color:#EEE;
+}
+
+footer{
+	display: flex;
+	height:100vh;
+	padding-left: 7vw;
+	padding-right: 7vw;
+	align-items: center;
+	justify-content: center;
+}
+
+@media only screen and (max-device-width : 480px) {
+	.card{
+		font-size: 2rem;
+	}
+}
+
+@media only screen and (max-device-width : 240px) {
+	.card{
+		font-size: 1rem;
+	}
+}
+
+

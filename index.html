@@ -1,181 +1,22 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<title>Oblique Strategies</title>
-		<link rel="stylesheet" type="text/css" href="css/oblique.css" />
-
-		<script type="text/javascript" src="js/csv.js"></script>
-		<script type="text/javascript" src="js/lostorage.js"></script>
-
-		<script>
-			var state = {
-				decks:[],
-				deck:"",	//i.e. deck 5 is default
-				pos:0
-			}
-
-			function selectDeck(edition){
-				console.log("selectDeck " + edition);
-				if(edition){
-					state.deck = String(edition);
-				}
-				//edit the state
-				state.pos = 0;
-				//shuffle the deck
-				recordSet.shuffle(state.decks[state.deck]);
-				//add cards
-				hideConfig();
-				addCards();
-				// if this is the first time a deck's been selected add the 'back' button to the config screencon
-			}
-
-			function addCards(){
-				console.log('add cards');
-				var deckDiv = document.getElementById("deck");
-				//remove all cards from the "deck" div 
-				deckDiv.innerHTML = "";
-				//add divs for the cards class = stack
-				var cards = state.decks[state.deck].records;
-				for (var i = cards.length-1; i >= 0; i--){
-					var newCard = document.createElement('div');
-					newCard.innerHTML = '<p class="card_text">' + cards[i]["card_text"] + '</p>'; 
-					newCard.addEventListener("click", nextCard);
-					newCard.setAttribute("id", "card"+i)
-					if(i == state.pos){
-						newCard.setAttribute("class", "active");
-					}else{
-						newCard.setAttribute("class", "stack");
-					}
-					deckDiv.appendChild(newCard);
-				}
-				//set the first cards div to class = active
-			}
-
-			function nextCard(){
-				console.log("nextCard");
-				//set current card to class = discard
-				var oldCard = document.getElementById('card' + state.pos);
-				oldCard.setAttribute("class","discard");
-				//increment current card modulo the deck length
-				state.pos = (state.pos + 1) % state.decks[state.deck].records.length;
-				if(state.pos == 0){
-					//if the current card is 0 call selectDeck with the current edition
-					selectDeck();
-				}else{
-					var newCard = document.getElementById('card' + state.pos);
-					newCard.setAttribute("class", "active");
-				}
-				saveState();
-			}
-
-			function main(){
-				console.log("main");
-				// button listers 
-				var config_opts = document.querySelectorAll('#config>ul>li>a');
-				for(var i = 0; i < config_opts.length; i++){
-					config_opts[i].addEventListener("click", selectionButtonClick, false);
-				}
-				document.getElementById("overlay").addEventListener("click", showConfig);
-				
-				restoreState(); //try to resore the state, nothing changes if it fails to do so
-				if(state.decks.length == 0){			//if there is no state, load the data and start from scratch
-					console.log("loading");
-					//check if we have the data locally, otherwise load it:				
-					var csvRequest = new XMLHttpRequest();
-					csvRequest.open('GET', 'data/obliquestrategies_.csv');
-					csvRequest.addEventListener("load", function() {
-						if (csvRequest.status === 200) {
-							var fullRecordSet = recordSet.createRecordSet(csvRequest.responseText);
-							var decks = {};
-							var editions = recordSet.enumerateValues(fullRecordSet, "edition");
-							for(var i = 0; i<editions.length; i++){
-								decks[editions[i]] = recordSet.createFilteredSet(fullRecordSet, "edition", editions[i]);
-							}
-							state.decks = decks;
-						}
-					}, false);
-					csvRequest.send();
-				}else{ //if there is state resore the interface to that state 
-					console.log("Restore Interface");
-					if(state.deck != ""){
-						addCards();
-						//if the position is > 0 flick through the deck to that point
-						var target_pos = state.pos;
-						state.pos = 0;
-						while(target_pos > state.pos){
-							nextCard();
-						}
-						hideConfig();
-					}
-				}
-			}
-
-			function createBackButton(){
-				console.log("createBackButton");
-				var list = document.getElementById("option_list")
-				list.insertAdjacentHTML('afterbegin', '<li class="option"><a href="#" id="back_button" class="deck_select_button">Back</li>');
-				var button = document.getElementById("back_button").addEventListener("click", hideConfig);
-			}
-
-			function hideConfig(){
-				//if the close link doesn't exist create it
-				if(!document.getElementById("back_button")){
-					createBackButton();
-				}
-				console.log('hide config');
-				document.getElementById("config").setAttribute("class", "control_inactive");
-				document.getElementById("overlay").setAttribute("class", "control_active");
-				return false;
-			}
-
-			function showConfig(){
-				console.log('show config');
-				document.getElementById("config").setAttribute("class", "control_active");
-				document.getElementById("overlay").setAttribute("class", "control_inactive");
-				return false;
-			}
-
-			function selectionButtonClick(e){
-				console.log("selectionButtonClick");
-				//hide the config layer
-				var deck = e.target.id;
-				selectDeck(deck);
-				return false;
-			}
-
-			function saveState(){
-				console.log("saveState")
-				storage.set('state',state);
-			}
-
-			function restoreState(){
-				console.log("restoreState");
-				var oldState = storage.get('state')
-				if(oldState){
-					state = oldState;
-				}else{
-					showConfig();
-				}
-			}
-
-		</script>
-	</head>
-	<body onload="main();">
-		<div id="deck"></div>
-		<div id="overlay" class="control_active">
-			<a id="config_button">config</a>
-		</div>
-		<div id="config" class="control_inactive">
-			<ul id="option_list">
-				<li class="option"><a href="#" id="1" class="deck_select_button">1st edition (1975)</a></li>
-				<li class="option"><a href="#" id="2" class="deck_select_button">2nd edition (1978)</a></li>
-				<li class="option"><a href="#" id="3" class="deck_select_button">3rd edition (1979)</a></li>
-				<li class="option"><a href="#" id="4" class="deck_select_button">4th edition (1996)</a></li>
-				<li class="option"><a href="#" id="5" class="deck_select_button">5th edition (2001)</a></li>
-			</ul>
-			<p class="info"><a href="http://www.rtqe.net/ObliqueStrategies/" class="body_link">About Oblique Strategies</a></p>
-			<p class="info"><a href="http://www.enoshop.co.uk/" class="body_link">Buy a proper deck from enoshop.co.uk</a></p>
-			<p class="credits"><a href="todo.html" class="body_link">v1</a> knocked together by <a href="http://www.pointlineplane.co.uk" class="body_link">Tom Pearson</a> 1st week of September 2012.</a></p>
-		</div>
-	</body>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Oblique Strategies</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="bundle.js" defer="defer"></script>
+</head>
+<body>
+<div class="frame"></div>
+<div class="ui">	<button class="random">draw another card</button> </div>
+<div class="info">	<button class="info">?</button> </div>
+<article>
+    <section class="card selected"></section>
+</article>
+<footer id="info">
+<p>Text of <a href="http://www.enoshop.co.uk/product/oblique-strategies.html">Oblique Strategies</a> by Brian Eno and Peter Schmidt.</p>
+<p>Used here without permission by Tom Pearson for the purposes of trying out some bits of <a href="https://github.com/d3/">D3v4</a>.</p> <p><a href="https://github.com/tomgp/HTML5-Oblique-Strategies">The code is here</a>.</p>
+</footer>
+</body>
 </html>
