@@ -14,7 +14,10 @@
   "devDependencies": {
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
-    "watchify": "^3.4.0",
-    "srvlr": "^0.5.0"
+    "d3-dsv": "^0.1.12",
+    "d3-request": "^0.2.3",
+    "d3-selection": "^0.4.12",
+    "srvlr": "^0.5.0",
+    "watchify": "^3.4.0"
   }
 }
