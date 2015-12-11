@@ -1,105 +1,91 @@
 html { font-size: 15px; }
 
 body { 
-	width: 87.5%;
-	margin-left: auto;
-	margin-right: auto;
 	font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", sans-serif, "Helvetica Neue", "Lucida Grande";
-	color: #111;
-	max-width: 1400px;
+	color: #00;
 }
 
-h1 { 
-	font-weight: 400;
-	margin-top: 4rem;
-	margin-bottom: 1.5rem;
-	font-size: 3.2rem;
-	line-height: 1; 
+.frame{
+	z-index: 1000;
+	position: fixed;
+	top:4vh;
+	left:4vw;
+	bottom:4vh;
+	right:4vw; 
+	border: 10px solid;
 }
 
-h2 { 
-	font-style: italic;
-	font-weight: 400;
-	margin-top: 2.1rem;
-	margin-bottom: 0;
-	font-size: 2.2rem;
-	line-height: 1; 
+.ui{
+	z-index: 1001;
+	position: fixed;
+	border: 5px solid;
+	background: #FFF;
+	top:0;
+	left:0;
 }
 
-h3 { 
-	font-style: italic;
-	font-weight: 400;
-	font-size: 1.7rem;
-	margin-top: 2rem;
-	margin-bottom: 0;
-	line-height: 1; 
+.info{
+	z-index: 1001;
+	position: fixed;
+	bottom:0;
+	right:0;
+	border: 5px solid;
+	background: #FFF;
 }
 
-p.subtitle {
-	font-style: italic;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	font-size: 1.8rem;
-	display: block;
-	line-height: 1rem; 
-}
-
-article {
-	max-width: 650px;
-	position: relative;
-	padding-left: 2rem;
-	padding-right: 2rem; 
-}
-
-section {
-	padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-p, ol, ul {
-	font-size: 1.4rem; 
-	line-height: 2rem;
-}
-
-ol, ul { 
-	width: 45%;
-	-webkit-padding-start: 5%;
-	-webkit-padding-end: 5%; 
+button{
+	user-select: none;
+	background: none;
+	border: none;
+	cursor: pointer;
 	font-size: 1rem;
 }
-         
-ul {
-	list-style-type: none; 
+
+button:active{
+	background: blue;
+	color: white;
 }
 
-li {
-	padding: 0.5rem 0; 
-	line-height: 1.5rem;
+button:focus{
+	outline:1px dotted magenta;
 }
 
-blockquote {
-	margin-top: 3em;
-    margin-bottom: 3em;
-    font-family: serif;
-    font-style: italic;
+.card{
+	font-weight: 400;
+	font-size: 3.2rem;
+	line-height: 1;
+	height:100vh;
+	display: flex;
+	height:100vh;
+	padding-left: 7vw;
+	padding-right: 7vw;
+	align-items: center;
+	justify-content: center;
 }
 
-figure {
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-	max-width: 55%;
-	-webkit-margin-start: 0;
-	-webkit-margin-end: 0;
-	margin: 0 0 3em 0;
+.card.unselected{
+	color:#EEE;
 }
 
-figcaption {
-	margin-top: 0;
-	margin-bottom: 0;
-	font-size: 1.1rem;
-	line-height: 1.6;
-	max-width: 40%; 
+footer{
+	display: flex;
+	height:100vh;
+	padding-left: 7vw;
+	padding-right: 7vw;
+	align-items: center;
+	justify-content: center;
 }
+
+@media only screen and (max-device-width : 480px) {
+	.card{
+		font-size: 2rem;
+	}
+}
+
+@media only screen and (max-device-width : 240px) {
+	.card{
+		font-size: 1rem;
+	}
+}
+
+
